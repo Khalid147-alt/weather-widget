@@ -1,0 +1,36 @@
+.weather-app {
+    background: linear-gradient(to right, red, purple);
+    text-align: center;
+    padding: 20px;
+  }
+  
+  input {
+    background-color: black;
+    color: green;
+    border: none;
+    padding: 10px;
+    margin: 10px 0;
+  }
+  
+  button {
+    background-color: black;
+    color: red;
+    border: none;
+    padding: 10px;
+    cursor: pointer;
+  }
+  
+  .weather-info {
+    color: white;
+    margin-top: 20px;
+  }
+  
+  h1, h2 {
+    color: yellow;
+  }
+  
+  p {
+    font-size: 18px;
+    color: lightgreen;
+  }
+  
