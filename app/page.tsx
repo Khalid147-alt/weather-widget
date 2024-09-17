@@ -1,7 +1,7 @@
 "use client"
 import React, { useState } from 'react';
 import axios from 'axios';
-import './WeatherApp.css'; // Import the CSS file for styling
+import './weatherapp.css'; // Import the CSS file for styling
 
 const WeatherApp: React.FC = () => {
   const [location, setLocation] = useState('');
