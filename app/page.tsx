@@ -1,20 +1,33 @@
-"use client"
+"use client";
 import React, { useState } from 'react';
 import axios from 'axios';
 import './weatherapp.css'; // Import the CSS file for styling
 
+interface WeatherData {
+  location: {
+    name: string;
+  };
+  current: {
+    condition: {
+      text: string;
+    };
+    temp_c: number;
+    is_day: number;
+  };
+}
+
 const WeatherApp: React.FC = () => {
-  const [location, setLocation] = useState('');
-  const [weatherData, setWeatherData] = useState<any>(null);
-  const [message, setMessage] = useState('');
+  const [location, setLocation] = useState<string>('');
+  const [weatherData, setWeatherData] = useState<WeatherData | null>(null);
+  const [message, setMessage] = useState<string>('');
 
   const API_KEY = 'd374f31afb0b4538b3c161528241709';
-  
+
   const getWeather = async (e: React.FormEvent) => {
     e.preventDefault();
     try {
       const response = await axios.get(`https://api.weatherapi.com/v1/current.json?key=${API_KEY}&q=${location}`);
-      const data = response.data;
+      const data: WeatherData = response.data;
       setWeatherData(data);
       generateMessage(data);
     } catch (error) {
@@ -23,7 +36,7 @@ const WeatherApp: React.FC = () => {
     }
   };
 
-  const generateMessage = (data: any) => {
+  const generateMessage = (data: WeatherData) => {
     const condition = data.current.condition.text.toLowerCase();
     const isDay = data.current.is_day;
     let timeOfDay = isDay ? 'day' : 'night';
@@ -51,15 +64,12 @@ const WeatherApp: React.FC = () => {
         />
         <button type="submit">Get Weather</button>
       </form>
-      
+      {message && <p>{message}</p>}
       {weatherData && (
-        <div className="weather-info">
-          <h2>Weather in {weatherData.location.name}, {weatherData.location.country}</h2>
-          <p>Condition: {weatherData.current.condition.text}</p>
-          <p>Temperature: {weatherData.current.temp_c} °C</p>
-          <p>{weatherData.current.is_day ? 'Day' : 'Night'} Time</p>
-          <p>Feels Like: {weatherData.current.feelslike_c} °C</p>
-          <p>{message}</p>
+        <div>
+          <h2>Weather in {weatherData.location.name}</h2>
+          <p>{weatherData.current.condition.text}</p>
+          <p>Temperature: {weatherData.current.temp_c}°C</p>
         </div>
       )}
     </div>
